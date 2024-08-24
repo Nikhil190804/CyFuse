@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
+const cors = require('cors')
 
 require("dotenv").config();
 const PORT = process.env.PORT || 3000;
+
+app.use(cors()); 
 
 // middleware 
 app.use(express.json());
@@ -19,4 +22,3 @@ dbConnect();
 app.listen(PORT,()=>{
     console.log("App is Running at the",PORT);
 })
-
