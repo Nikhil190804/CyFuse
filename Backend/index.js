@@ -7,10 +7,10 @@ const PORT = process.env.PORT || 3000;
 // middleware 
 app.use(express.json());
 
-//const allRoutes = require('./routes/allRoutes');
+const allRoutes = require('./routes/allRoutes');
 
 // mount 
-//app.use("/api/v1",allRoutes);
+app.use("/api/v1",allRoutes);
 
 const dbConnect = require('./config/database');
 dbConnect();
