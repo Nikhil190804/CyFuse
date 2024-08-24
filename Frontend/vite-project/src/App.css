@@ -1,0 +1,73 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: rgb(2,0,36);
+  background: linear-gradient(20deg, rgba(2,0,36,1) 0%, rgba(15,64,140,1) 46%, rgba(0,212,255,1) 100%);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgb(2,0,36);
+  background: linear-gradient(20deg, rgba(2,0,36,1) 0%, rgba(5,73,178,1) 100%, rgba(0,212,255,1) 100%);
+  color: white;
+}
+.navbar-logo {
+  padding: 5px;
+  background-color: transparent;
+}
+
+.navbar-logo img {
+  display: block;
+  object-fit: contain;
+}
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  margin: 0 1rem;
+}
+
+.content-wrapper {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #f0f0f0;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.sidebar-section {
+  margin-bottom: 1rem;
+}
+
+.sidebar-section ul {
+  list-style-type: none;
+  padding-left: 1rem;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.dashboard-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
