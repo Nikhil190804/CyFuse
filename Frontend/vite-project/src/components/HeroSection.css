@@ -1,16 +1,18 @@
 /* src/components/HeroSection.css */
 .hero-section {
 
+  background: linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.2) 100%), url('path-to-your-image.jpg'); /* Added image and subtle gradient overlay */
   background-size: cover;
   background-position: center;
-  padding: 4rem 2rem;
+  padding: 6rem 2rem; /* Increased padding for a more spacious look */
   text-align: center;
-  color: #2e7d32; /* Adjust color to match your green */
-  border: 2px solid #2e7d32;
-  border-radius: 15px;
-  margin: 1rem;
-  background: rgb(2,0,36);
-  background: linear-gradient(20deg, rgba(2,0,36,1) 0%, rgba(23,173,204,1) 25%, rgba(12,101,240,1) 100%);
+  color: #f0f0f0; /* Slightly lighter text color for contrast */
+  border: none;
+  border-radius: 25px; /* Increased border radius for a smoother look */
+  margin: 2rem auto; /* Centered section with margin */
+  max-width: 1200px; /* Increased max-width for better content spread */
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Deeper shadow for added depth */
+
 }
 
 .hero-content {

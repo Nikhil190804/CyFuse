@@ -1,17 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 // src/App.js
-import React, { useEffect } from "react";
-import Auth from "./components/Auth.jsx";
-
-import { useState } from 'react'
-
+import Auth from "./components/Auth";
 import { gapi } from 'gapi-script';
 import './App.css';
 import logo from './assets/logo.jpg';
 import HeroSection from './components/HeroSection';
-
-import Auth from './components/Auth';
 import IntroSection from './components/IntroSection';
 import TechNewsSection from './components/TechNewsSection';
 
@@ -185,16 +179,11 @@ function App() {
   return (  
     <div className="app">
         <Navbar />
-        {/* <div className="content-wrapper">
-          <Sidebar />
-          <MainContent />
-        </div> */}
       {!authMode ? (
           <HeroSection onJoinNow={handleJoinNowClick} onGetStarted={handleGetStartedClick} />
         ) : (
           <Auth isSignUp={authMode === 'signup'} onSuccess={handleAuthSuccess} />
         )}
-      <HeroSection></HeroSection>
       <IntroSection></IntroSection>
       <TechNewsSection></TechNewsSection>
     </div>
