@@ -4,6 +4,8 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import logo from './assets/logo.jpg';
 import HeroSection from './components/HeroSection';
+import IntroSection from './components/IntroSection';
+import TechNewsSection from './components/TechNewsSection';
 
 function Navbar() {
   return (
@@ -90,6 +92,8 @@ function App() {
         <MainContent />
       </div> */}
       <HeroSection></HeroSection>
+      <IntroSection></IntroSection>
+      <TechNewsSection></TechNewsSection>
     </div>
   );
 }
