@@ -1,9 +1,6 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import { useEffect } from 'react';
 import { gapi } from 'gapi-script';
-import './App.css'
+import './App.css';
 import logo from './assets/logo.jpg';
 import HeroSection from './components/HeroSection';
 
@@ -14,7 +11,9 @@ const SCOPES = 'https://www.googleapis.com/auth/calendar.events';
 function Navbar() {
   return (
     <nav className="navbar">
-      <div className="navbar-logo"> <img width = "40rem" height = "40rem" src={logo} alt="Logo" /></div>
+      <div className="navbar-logo">
+        <img width="40rem" height="40rem" src={logo} alt="Logo" />
+      </div>
       <div className="navbar-links">
         <a href="#">Home</a>
         <a href="#">Projects</a>
@@ -87,6 +86,7 @@ function MainContent() {
     </main>
   );
 }
+
 function App() {
   useEffect(() => {
     const start = () => {
@@ -152,17 +152,18 @@ function App() {
   };
 
   return (
-
     <div>
+      
+      <div className="app">
+        <Navbar />
+        {/* <div className="content-wrapper">
+          <Sidebar />
+          <MainContent />
+        </div> */}
+        <HeroSection />
+      </div>
       <button onClick={handleAuthClick}>Sign in with Google</button>
       <button onClick={createGoogleMeet}>Create Google Meet</button>
-    <div className="app">
-      <Navbar />
-      {/* <div className="content-wrapper">
-        <Sidebar />
-        <MainContent />
-      </div> */}
-      <HeroSection></HeroSection>
     </div>
   );
 }
