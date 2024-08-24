@@ -12,6 +12,8 @@ import { gapi } from 'gapi-script';
 import './App.css';
 import logo from './assets/logo.jpg';
 import HeroSection from './components/HeroSection';
+import IntroSection from './components/IntroSection';
+import TechNewsSection from './components/TechNewsSection';
 
 const CLIENT_ID = '1072192242833-p04mfhg029gk0earersup565qoi3344q.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyCTAxL0HW8o_PAmP2RTdjWIl6obyuXWWlI';
@@ -161,6 +163,15 @@ function App() {
   };
 
   return (
+    <div className="app">
+      <Navbar />
+      {/* <div className="content-wrapper">
+        <Sidebar />
+        <MainContent />
+      </div> */}
+      <HeroSection></HeroSection>
+      <IntroSection></IntroSection>
+      <TechNewsSection></TechNewsSection>
     <div>
       
       <div className="app">

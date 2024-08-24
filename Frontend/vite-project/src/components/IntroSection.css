@@ -1,0 +1,54 @@
+.intro-section {
+    padding: 3rem 1rem;
+    background-color: #f5f5f5;
+    border: 2px solid #2e7d32;
+    border-radius: 15px;
+    margin: 1rem;
+    background: rgb(2,0,36);
+    background: linear-gradient(20deg, rgba(2,0,36,1) 0%, rgba(23,173,204,1) 25%, rgba(12,101,240,1) 100%);
+  }
+  
+  .intro-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .intro-title {
+    color: rgb(2,0,36);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  .intro-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .intro-features {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 1.5rem;
+  }
+  
+  .intro-features li {
+    padding-left: 1.5rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+  }
+  
+  .intro-features li::before {
+    content: '•';
+    color: #2e7d32;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+  }
+  
+  .intro-cta {
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    color: #2e7d32;
+  }
