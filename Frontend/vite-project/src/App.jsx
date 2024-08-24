@@ -1,10 +1,8 @@
 // src/App.js
 import React, { useEffect } from "react";
-import React from "react";
 import Auth from "./components/Auth.jsx";
 
 import { useState } from 'react'
-import { useEffect } from 'react';
 import { gapi } from 'gapi-script';
 import './App.css';
 import logo from './assets/logo.jpg';
@@ -168,8 +166,6 @@ function App() {
       <HeroSection></HeroSection>
       <IntroSection></IntroSection>
       <TechNewsSection></TechNewsSection>
-      <button onClick={handleAuthClick}>Sign in with Google</button>
-      <button onClick={createGoogleMeet}>Create Google Meet</button>
     </div>
   );
 }
