@@ -1,6 +1,5 @@
-
-
 // src/App.js
+import React, { useEffect } from "react";
 import React from "react";
 import Auth from "./components/Auth.jsx";
 
@@ -61,7 +60,6 @@ function Sidebar() {
           <li>Deadlines</li>
         </ul>
       </div>
-      {/* Add more sidebar sections as needed */}
     </aside>
   );
 }
@@ -160,8 +158,7 @@ function App() {
     }
   };
 
-  return (
-      
+  return (  
     <div className="app">
         <Navbar />
         {/* <div className="content-wrapper">
