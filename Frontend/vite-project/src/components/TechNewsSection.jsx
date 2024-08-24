@@ -3,6 +3,7 @@ import './TechNewsSection.css';
 
 function TechNewsSection() {
   const [news, setNews] = useState([]);
+  const [news_data, setnews_data] = useState([]);
 
   useEffect(() => {
     fetchNews();
@@ -10,10 +11,22 @@ function TechNewsSection() {
 
   const fetchNews = async () => {
     try {
-      const response = await fetch('https://newsapi.org/v2/everything?q=apple&from=2024-08-23&to=2024-08-23&sortBy=popularity&apiKey=6cedc1e4560445b9a50742114f2203dc');
+      const response = await fetch('https://hacker-news.firebaseio.com/v0/beststories.json');
       const data = await response.json();
-      setNews(data.articles.slice(0, 4)); // Get only the first 4 articles
-      console.log(news)
+      setNews(data);
+
+      const randomElements = [...data]
+        .sort(() => Math.random() - 0.5)  // Shuffle the array
+        .slice(0, 4);
+
+      const fetchedNews = await Promise.all(
+        randomElements.map(async (id) => {
+          const newUrl = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
+          return await newUrl.json();
+        })
+      );
+
+      setnews_data(fetchedNews);
     } catch (error) {
       console.error('Error fetching news:', error);
     }
@@ -23,15 +36,15 @@ function TechNewsSection() {
     <section className="tech-news-section">
       <h2>Latest Tech News</h2>
       <div className="news-grid">
-        {news.map((article, index) => (
+        {news_data.map((article, index) => (
           <div key={index} className="news-card">
-            {article.urlToImage && (
-              <img src={article.urlToImage} alt={article.title} className="news-image" />
-            )}
             <h3>{article.title}</h3>
-            <p>{article.description}</p>
-            {console.log(article.url)}
-            <a href={article.url} target="_blank" rel="noopener noreferrer">Read more</a>
+            <p>{article.type}</p>
+            {console.log("here" + article.url)}
+            <p>{article.by}</p>
+            <a href={article.url} target="_blank" rel="noopener noreferrer">
+              Read more
+            </a>
           </div>
         ))}
       </div>
