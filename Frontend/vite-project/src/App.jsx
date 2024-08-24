@@ -1,3 +1,12 @@
+
+
+// src/App.js
+import React from "react";
+import Auth from "./components/Auth.jsx";
+
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
 import { useEffect } from 'react';
 import { gapi } from 'gapi-script';
 import './App.css';
