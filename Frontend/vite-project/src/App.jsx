@@ -1,12 +1,17 @@
+
+import React, { useState, useEffect } from 'react';
 // src/App.js
 import React, { useEffect } from "react";
 import Auth from "./components/Auth.jsx";
 
 import { useState } from 'react'
+
 import { gapi } from 'gapi-script';
 import './App.css';
 import logo from './assets/logo.jpg';
 import HeroSection from './components/HeroSection';
+
+import Auth from './components/Auth';
 import IntroSection from './components/IntroSection';
 import TechNewsSection from './components/TechNewsSection';
 
@@ -31,6 +36,7 @@ function Navbar() {
     </nav>
   );
 }
+
 
 function Sidebar() {
   return (
@@ -92,7 +98,10 @@ function MainContent() {
   );
 }
 
+
 function App() {
+  const [authMode, setAuthMode] = useState(null);
+
   useEffect(() => {
     const start = () => {
       gapi.client
@@ -114,8 +123,25 @@ function App() {
     gapi.load('client:auth2', start);
   }, []);
 
+  const handleJoinNowClick = () => {
+    setAuthMode('signup');
+  };
+
+  const handleGetStartedClick = () => {
+    setAuthMode('signin');
+  };
+
+  const handleAuthSuccess = () => {
+    setAuthMode(null); // Reset state after successful auth
+  };
+
   const handleAuthClick = () => {
-    gapi.auth2.getAuthInstance().signIn();
+    const authInstance = gapi.auth2.getAuthInstance();
+    authInstance.signIn().then(() => {
+      console.log('User signed in');
+    }).catch(error => {
+      console.error('Error signing in', error);
+    });
   };
 
   const createGoogleMeet = async () => {
@@ -163,6 +189,11 @@ function App() {
           <Sidebar />
           <MainContent />
         </div> */}
+      {!authMode ? (
+          <HeroSection onJoinNow={handleJoinNowClick} onGetStarted={handleGetStartedClick} />
+        ) : (
+          <Auth isSignUp={authMode === 'signup'} onSuccess={handleAuthSuccess} />
+        )}
       <HeroSection></HeroSection>
       <IntroSection></IntroSection>
       <TechNewsSection></TechNewsSection>
