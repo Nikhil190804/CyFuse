@@ -2,11 +2,13 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import logo from './assets/logo.jpg';
+import HeroSection from './components/HeroSection';
 
 function Navbar() {
   return (
     <nav className="navbar">
-      <div className="navbar-logo">Logo</div>
+      <div className="navbar-logo"> <img width = "40rem" height = "40rem" src={logo} alt="Logo" /></div>
       <div className="navbar-links">
         <a href="#">Home</a>
         <a href="#">Projects</a>
@@ -83,10 +85,11 @@ function App() {
   return (
     <div className="app">
       <Navbar />
-      <div className="content-wrapper">
+      {/* <div className="content-wrapper">
         <Sidebar />
         <MainContent />
-      </div>
+      </div> */}
+      <HeroSection></HeroSection>
     </div>
   );
 }
