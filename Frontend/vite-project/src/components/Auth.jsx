@@ -1,15 +1,16 @@
-// src/components/Auth.js
-import React, { useState } from "react";
+// src/components/Auth.jsx
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Auth = () => {
-  const [name, setName] = useState(""); // Added for sign-up
+const Auth = ({ isSignUp, onSuccess }) => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSignUp, setIsSignUp] = useState(false);
+  const navigate = useNavigate();
 
   const handleAuth = async () => {
     try {
-      const response = await fetch(`http://your-api-url/api/v1/${isSignUp ? 'sign-up' : 'sign-in'}`, {
+      const response = await fetch(`https://cyfuse.onrender.com/api/v1/${isSignUp ? 'signup' : 'login'}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -21,6 +22,7 @@ const Auth = () => {
 
       if (response.ok) {
         alert(isSignUp ? "User Registered Successfully!" : "Logged in Successfully!");
+        navigate('/dashboard');
       } else {
         throw new Error(data.message || "Something went wrong");
       }
@@ -59,13 +61,12 @@ const Auth = () => {
         <button onClick={handleAuth} style={styles.button}>
           {isSignUp ? "Sign Up" : "Sign In"}
         </button>
-        <p onClick={() => setIsSignUp(!isSignUp)} style={styles.switchText}>
-          {isSignUp ? "Already have an account? Sign In" : "Don't have an account? Sign Up"}
-        </p>
       </div>
     </div>
   );
 };
+
+
 
 const styles = {
   page: {
@@ -105,11 +106,6 @@ const styles = {
     border: "none",
     borderRadius: "4px",
     transition: "background-color 0.3s ease",
-  },
-  switchText: {
-    marginTop: "15px",
-    cursor: "pointer",
-    color: "#007bff",
   },
 };
 

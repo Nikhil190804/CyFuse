@@ -1,17 +1,11 @@
-
-
-// src/App.js
-import React from "react";
-import Auth from "./components/Auth.jsx";
-
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import { gapi } from 'gapi-script';
 import './App.css';
 import logo from './assets/logo.jpg';
 import HeroSection from './components/HeroSection';
+import Auth from './components/Auth';
+import Dashboard from './components/Dashboard';
 
 const CLIENT_ID = '1072192242833-p04mfhg029gk0earersup565qoi3344q.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyCTAxL0HW8o_PAmP2RTdjWIl6obyuXWWlI';
@@ -24,7 +18,7 @@ function Navbar() {
         <img width="40rem" height="40rem" src={logo} alt="Logo" />
       </div>
       <div className="navbar-links">
-        <a href="#">Home</a>
+        <a href="/">Home</a>
         <a href="#">Projects</a>
         <a href="#">Resources</a>
         <a href="#">Messages</a>
@@ -35,68 +29,9 @@ function Navbar() {
   );
 }
 
-function Sidebar() {
-  return (
-    <aside className="sidebar">
-      <div className="sidebar-section">
-        <h3>Project Overview</h3>
-        <ul>
-          <li>Active Projects</li>
-          <li>Archived Projects</li>
-          <li>Project Templates</li>
-        </ul>
-      </div>
-      <div className="sidebar-section">
-        <h3>Team Collaboration</h3>
-        <ul>
-          <li>Team Forums</li>
-          <li>Group Chat</li>
-          <li>Collaborative Tools</li>
-        </ul>
-      </div>
-      <div className="sidebar-section">
-        <h3>Progress Tracking</h3>
-        <ul>
-          <li>Milestones</li>
-          <li>Deadlines</li>
-        </ul>
-      </div>
-      {/* Add more sidebar sections as needed */}
-    </aside>
-  );
-}
-
-function MainContent() {
-  return (
-    <main className="main-content">
-      <h1>Dashboard</h1>
-      <div className="dashboard-grid">
-        <div className="dashboard-card">
-          <h2>Project Summary</h2>
-          <p>Overview of your current projects</p>
-        </div>
-        <div className="dashboard-card">
-          <h2>Recent Activity</h2>
-          <ul>
-            <li>Update 1</li>
-            <li>Update 2</li>
-            <li>Announcement 1</li>
-          </ul>
-        </div>
-        <div className="dashboard-card">
-          <h2>Upcoming Deadlines</h2>
-          <p>Calendar view here</p>
-        </div>
-        <div className="dashboard-card">
-          <h2>Team Performance</h2>
-          <p>Performance metrics and charts</p>
-        </div>
-      </div>
-    </main>
-  );
-}
-
 function App() {
+  const [authMode, setAuthMode] = useState(null);
+
   useEffect(() => {
     const start = () => {
       gapi.client
@@ -118,8 +53,25 @@ function App() {
     gapi.load('client:auth2', start);
   }, []);
 
+  const handleJoinNowClick = () => {
+    setAuthMode('signup');
+  };
+
+  const handleGetStartedClick = () => {
+    setAuthMode('signin');
+  };
+
+  const handleAuthSuccess = () => {
+    setAuthMode(null); // Reset state after successful auth
+  };
+
   const handleAuthClick = () => {
-    gapi.auth2.getAuthInstance().signIn();
+    const authInstance = gapi.auth2.getAuthInstance();
+    authInstance.signIn().then(() => {
+      console.log('User signed in');
+    }).catch(error => {
+      console.error('Error signing in', error);
+    });
   };
 
   const createGoogleMeet = async () => {
@@ -161,19 +113,28 @@ function App() {
   };
 
   return (
-    <div>
-      
-      <div className="app">
+    <Router>
+      <div>
         <Navbar />
-        {/* <div className="content-wrapper">
-          <Sidebar />
-          <MainContent />
-        </div> */}
-        <HeroSection />
+        <div className="app">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                !authMode ? (
+                  <HeroSection onJoinNow={handleJoinNowClick} onGetStarted={handleGetStartedClick} />
+                ) : (
+                  <Auth isSignUp={authMode === 'signup'} onSuccess={handleAuthSuccess} />
+                )
+              }
+            />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+        </div>
+        <button onClick={handleAuthClick}>Sign in with Google</button>
+        <button onClick={createGoogleMeet}>Create Google Meet</button>
       </div>
-      <button onClick={handleAuthClick}>Sign in with Google</button>
-      <button onClick={createGoogleMeet}>Create Google Meet</button>
-    </div>
+    </Router>
   );
 }
 
