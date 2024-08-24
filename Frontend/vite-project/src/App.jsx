@@ -1,13 +1,5 @@
-
-
 // src/App.js
-import React from "react";
-import Auth from "./components/Auth.jsx";
-
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { gapi } from 'gapi-script';
 import './App.css';
 import logo from './assets/logo.jpg';
@@ -63,7 +55,6 @@ function Sidebar() {
           <li>Deadlines</li>
         </ul>
       </div>
-      {/* Add more sidebar sections as needed */}
     </aside>
   );
 }
@@ -165,23 +156,13 @@ function App() {
   return (
     <div className="app">
       <Navbar />
-      {/* <div className="content-wrapper">
+      <div className="content-wrapper">
         <Sidebar />
         <MainContent />
-      </div> */}
-      <HeroSection></HeroSection>
-      <IntroSection></IntroSection>
-      <TechNewsSection></TechNewsSection>
-    <div>
-      
-      <div className="app">
-        <Navbar />
-        {/* <div className="content-wrapper">
-          <Sidebar />
-          <MainContent />
-        </div> */}
-        <HeroSection />
       </div>
+      <HeroSection />
+      <IntroSection />
+      <TechNewsSection />
       <button onClick={handleAuthClick}>Sign in with Google</button>
       <button onClick={createGoogleMeet}>Create Google Meet</button>
     </div>
