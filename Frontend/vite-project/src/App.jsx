@@ -1,16 +1,18 @@
 
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import NewProject from "./components/NewProject.jsx";
-
-
 import React, { useState, useEffect } from 'react';
 // src/App.js
 import Auth from "./components/Auth";
+
 import { gapi } from 'gapi-script';
 import './App.css';
 import logo from './assets/logo.jpg';
 import HeroSection from './components/HeroSection';
+import Dashboard from './components/Dashboard';
 import IntroSection from './components/IntroSection';
 import TechNewsSection from './components/TechNewsSection';
+
 
 const CLIENT_ID = '1072192242833-p04mfhg029gk0earersup565qoi3344q.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyCTAxL0HW8o_PAmP2RTdjWIl6obyuXWWlI';
@@ -23,7 +25,7 @@ function Navbar() {
         <img width="40rem" height="40rem" src={logo} alt="Logo" />
       </div>
       <div className="navbar-links">
-        <a href="#">Home</a>
+        <a href="/">Home</a>
         <a href="#">Projects</a>
         <a href="#">Resources</a>
         <a href="#">Messages</a>
@@ -33,6 +35,7 @@ function Navbar() {
     </nav>
   );
 }
+
 
 
 function Sidebar() {
@@ -94,7 +97,6 @@ function MainContent() {
     </main>
   );
 }
-
 
 function App() {
   const [authMode, setAuthMode] = useState(null);
@@ -179,19 +181,29 @@ function App() {
     }
   };
 
-  return (  
-    <div className="app">
+  return (
+    <Router>
+      <div>
         <Navbar />
-      {!authMode ? (
-          <HeroSection onJoinNow={handleJoinNowClick} onGetStarted={handleGetStartedClick} />
-        ) : (
-          <Auth isSignUp={authMode === 'signup'} onSuccess={handleAuthSuccess} />
-        )}
-      <IntroSection></IntroSection>
-      <TechNewsSection></TechNewsSection>
-      <NewProject />
-
-    </div>
+        <div className="app">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                !authMode ? (
+                  <HeroSection onJoinNow={handleJoinNowClick} onGetStarted={handleGetStartedClick} />
+                ) : (
+                  <Auth isSignUp={authMode === 'signup'} onSuccess={handleAuthSuccess} />
+                )
+              }
+            />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+        </div>
+        <button onClick={handleAuthClick}>Sign in with Google</button>
+        <button onClick={createGoogleMeet}>Create Google Meet</button>
+      </div>
+    </Router>
   );
 }
 
