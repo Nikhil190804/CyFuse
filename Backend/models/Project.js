@@ -16,6 +16,7 @@ const projectSchema = new mongoose.Schema({
   },
   start_date: {
     type: Date,
+    default: Date.now,
   },
   end_date: {
     type: Date,
