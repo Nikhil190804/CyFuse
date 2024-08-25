@@ -1,16 +1,14 @@
-
-import NewProject from "./components/NewProject.jsx";
-
-
 import React, { useState, useEffect } from 'react';
-// src/App.js
-import Auth from "./components/Auth";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { gapi } from 'gapi-script';
 import './App.css';
 import logo from './assets/logo.jpg';
 import HeroSection from './components/HeroSection';
 import IntroSection from './components/IntroSection';
 import TechNewsSection from './components/TechNewsSection';
+import NewProject from './components/NewProject';
+import Auth from './components/Auth';
+import Dashboard from './components/dashboard';
 
 const CLIENT_ID = '1072192242833-p04mfhg029gk0earersup565qoi3344q.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyCTAxL0HW8o_PAmP2RTdjWIl6obyuXWWlI';
@@ -34,70 +32,9 @@ function Navbar() {
   );
 }
 
-
-function Sidebar() {
-  return (
-    <aside className="sidebar">
-      <div className="sidebar-section">
-        <h3>Project Overview</h3>
-        <ul>
-          <li>Active Projects</li>
-          <li>Archived Projects</li>
-          <li>Project Templates</li>
-        </ul>
-      </div>
-      <div className="sidebar-section">
-        <h3>Team Collaboration</h3>
-        <ul>
-          <li>Team Forums</li>
-          <li>Group Chat</li>
-          <li>Collaborative Tools</li>
-        </ul>
-      </div>
-      <div className="sidebar-section">
-        <h3>Progress Tracking</h3>
-        <ul>
-          <li>Milestones</li>
-          <li>Deadlines</li>
-        </ul>
-      </div>
-    </aside>
-  );
-}
-
-function MainContent() {
-  return (
-    <main className="main-content">
-      <h1>Dashboard</h1>
-      <div className="dashboard-grid">
-        <div className="dashboard-card">
-          <h2>Project Summary</h2>
-          <p>Overview of your current projects</p>
-        </div>
-        <div className="dashboard-card">
-          <h2>Recent Activity</h2>
-          <ul>
-            <li>Update 1</li>
-            <li>Update 2</li>
-            <li>Announcement 1</li>
-          </ul>
-        </div>
-        <div className="dashboard-card">
-          <h2>Upcoming Deadlines</h2>
-          <p>Calendar view here</p>
-        </div>
-        <div className="dashboard-card">
-          <h2>Team Performance</h2>
-          <p>Performance metrics and charts</p>
-        </div>
-      </div>
-    </main>
-  );
-}
-
-
 function App() {
-  const [authMode, setAuthMode] = useState(null);
+  const [authMode, setAuthMode] = useState(null); // 'signup' or 'signin' or null
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const start = () => {
@@ -129,69 +66,37 @@ function App() {
   };
 
   const handleAuthSuccess = () => {
-    setAuthMode(null); // Reset state after successful auth
+    setIsAuthenticated(true); // Set authentication state to true
+    setAuthMode(null); // Clear auth mode
   };
 
-  const handleAuthClick = () => {
-    const authInstance = gapi.auth2.getAuthInstance();
-    authInstance.signIn().then(() => {
-      console.log('User signed in');
-    }).catch(error => {
-      console.error('Error signing in', error);
-    });
-  };
-
-  const createGoogleMeet = async () => {
-    try {
-      await gapi.client.load('calendar', 'v3');
-      console.log('Google Calendar API loaded');
-
-      const event = {
-        summary: 'Google Meet Meeting',
-        description: 'A Google Meet meeting',
-        start: {
-          dateTime: '2024-08-25T09:00:00+05:30', // Time in IST
-          timeZone: 'Asia/Kolkata',
-        },
-        end: {
-          dateTime: '2024-08-25T10:00:00+05:30', // Time in IST
-          timeZone: 'Asia/Kolkata',
-        },
-        conferenceData: {
-          createRequest: {
-            requestId: 'sample123',
-            conferenceSolutionKey: {
-              type: 'hangoutsMeet',
-            },
-          },
-        },
-      };
-
-      const response = await gapi.client.calendar.events.insert({
-        calendarId: 'primary',
-        resource: event,
-        conferenceDataVersion: 1,
-      });
-
-      console.log('Google Meet link:', response.result.hangoutLink);
-    } catch (error) {
-      console.error('API request error:', error);
-    }
-  };
-
-  return (  
-    <div className="app">
+  return (
+    <Router>
+      <div className="app">
         <Navbar />
-      {!authMode ? (
-          <HeroSection onJoinNow={handleJoinNowClick} onGetStarted={handleGetStartedClick} />
-        ) : (
-          <Auth isSignUp={authMode === 'signup'} onSuccess={handleAuthSuccess} />
-        )}
-      <IntroSection></IntroSection>
-      <TechNewsSection></TechNewsSection>
-      <NewProject />
-
-    </div>
+        <Routes>
+          <Route path="/" element={
+            !isAuthenticated ? (
+              <>
+                {!authMode ? (
+                  <>
+                    <HeroSection onJoinNow={handleJoinNowClick} onGetStarted={handleGetStartedClick} />
+                    <IntroSection />
+                    <TechNewsSection />
+                    <NewProject />
+                  </>
+                ) : (
+                  <Auth isSignUp={authMode === 'signup'} onSuccess={handleAuthSuccess} />
+                )}
+              </>
+            ) : (
+              <Dashboard />
+            )
+          } />
+          <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/" />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

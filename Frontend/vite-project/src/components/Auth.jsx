@@ -18,9 +18,8 @@ const Auth = ({ isSignUp, onSuccess }) => {
       const data = await response.json();
 
       if (response.ok) {
-        alert(isSignUp ? "User Registered Successfully!" : "Logged in Successfully!"
-        );
-        onSuccess();
+        alert(isSignUp ? "User Registered Successfully!" : "Logged in Successfully!");
+        onSuccess(); // Notify parent about successful authentication
       } else {
         throw new Error(data.message || "Something went wrong");
       }
