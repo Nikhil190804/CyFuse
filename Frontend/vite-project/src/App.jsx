@@ -1,6 +1,7 @@
 // src/App.js
 import React, { useEffect } from "react";
 import Auth from "./components/Auth.jsx";
+import NewProject from "./components/NewProject.jsx";
 
 import { useState } from 'react'
 import { gapi } from 'gapi-script';
@@ -166,6 +167,8 @@ function App() {
       <HeroSection></HeroSection>
       <IntroSection></IntroSection>
       <TechNewsSection></TechNewsSection>
+      <NewProject />
+
     </div>
   );
 }
