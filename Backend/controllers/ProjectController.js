@@ -1,10 +1,12 @@
 const Project = require("../models/Project");
-exports.create = async (req, res) => {
+
+
+exports.createProject = async (req, res) => {
     try {
       // Fetch data from request body
-      const {project_name,description, status, start_date, end_date, owner_id, created_at, updated_at, tags, filter, coleborator} = req.body;
+      const {project_name,description,owner_id, tags, filter} = req.body;
 
-        const response = await Project.create({project_name,description,  start_date, end_date, owner_id});
+        const response = await Project.create({project_name,description,owner_id,tags,filter});
         res.status(200).json(
             {
                 success:true,
