@@ -2,11 +2,14 @@ const express = require('express');
 const router = express.Router();
 
 // Import Controller 
-const {login} = require("../controllers/login");
+const {login,signup} = require("../controllers/login");
+const {createProject} = require("../controllers/ProjectController");
 
 
 // Mapping Create
-router.get("/login",login)
+router.post("/login",login)
+router.post("/signup",signup)
+router.post("/createProject",createProject)
 
 // Export Controller
 module.exports = router;

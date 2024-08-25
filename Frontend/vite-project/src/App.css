@@ -6,17 +6,20 @@
   }
   
   html, body {
+    margin: 0;
+    padding: 0;
     height: 100%;
-    width: 100%;
+     /* Ensure the body scrolls if content overflows */
   }
+  
+
   
   .app {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     background: rgb(2,0,36);
     background: linear-gradient(20deg, rgba(2,0,36,1) 0%, rgba(15,64,140,1) 46%, rgba(0,212,255,1) 100%);
-    overflow: hidden; /* Prevent scrolling */
   }
   
   .navbar {
