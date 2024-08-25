@@ -1,4 +1,7 @@
 
+import NewProject from "./components/NewProject.jsx";
+
+
 import React, { useState, useEffect } from 'react';
 // src/App.js
 import Auth from "./components/Auth";
@@ -186,6 +189,8 @@ function App() {
         )}
       <IntroSection></IntroSection>
       <TechNewsSection></TechNewsSection>
+      <NewProject />
+
     </div>
   );
 }
