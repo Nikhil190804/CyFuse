@@ -1,14 +1,45 @@
-// src/components/Dashboard.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import './Dashboard.css'; // Create this CSS file for styling
+import { loadGoogleCalendarAPI, createGoogleMeetEvent } from './Services';
+import Footer from './Footer';
 
 const Dashboard = () => {
+  const [showForm, setShowForm] = useState(false);
+  const [dateTime, setDateTime] = useState('');
+  const [meetLink, setMeetLink] = useState('');
+
+  const handleToggleForm = () => {
+    setShowForm(!showForm);
+  };
+
+  const handleDateTimeChange = (e) => {
+    setDateTime(e.target.value);
+  };
+
+  const handleCreateGoogleMeet = async () => {
+    try {
+      await loadGoogleCalendarAPI();
+      const link = await createGoogleMeetEvent(dateTime);
+      setMeetLink(link);
+    } catch (error) {
+      console.error('API request error:', error);
+    }
+  };
+
   return (
     <div className="dashboard">
       <div className="dashboard-content">
         <Sidebar />
-        <MainContent />
+        <MainContent
+          showForm={showForm}
+          handleToggleForm={handleToggleForm}
+          dateTime={dateTime}
+          handleDateTimeChange={handleDateTimeChange}
+          handleCreateGoogleMeet={handleCreateGoogleMeet}
+          meetLink={meetLink}
+        />
       </div>
+      <Footer />
     </div>
   );
 };
@@ -63,34 +94,34 @@ const Sidebar = () => (
     <div className="sidebar-section">
       <h3>Archived Projects</h3>
       <div className="project-card">
-          <h4>Project Title 1</h4>
-          <p>Description for project 1</p>
-        </div>
-        <div className="project-card">
-          <h4>Project Title 2</h4>
-          <p>Description for project 2</p>
-        </div>
-        <div className="project-card">
-          <h4>Project Title 3</h4>
-          <p>Description for project 3</p>
-        </div>
-        <div className="project-card">
-          <h4>Project Title 4</h4>
-          <p>Description for project 4</p>
-        </div>
-        <div className="project-card">
-          <h4>Project Title 5</h4>
-          <p>Description for project 5</p>
-        </div>
-        <div className="project-card">
-          <h4>Project Title 6</h4>
-          <p>Description for project 6</p>
-        </div>
+        <h4>Project Title 1</h4>
+        <p>Description for project 1</p>
+      </div>
+      <div className="project-card">
+        <h4>Project Title 2</h4>
+        <p>Description for project 2</p>
+      </div>
+      <div className="project-card">
+        <h4>Project Title 3</h4>
+        <p>Description for project 3</p>
+      </div>
+      <div className="project-card">
+        <h4>Project Title 4</h4>
+        <p>Description for project 4</p>
+      </div>
+      <div className="project-card">
+        <h4>Project Title 5</h4>
+        <p>Description for project 5</p>
+      </div>
+      <div className="project-card">
+        <h4>Project Title 6</h4>
+        <p>Description for project 6</p>
+      </div>
     </div>
   </aside>
 );
 
-const MainContent = () => (
+const MainContent = ({ showForm, handleToggleForm, dateTime, handleDateTimeChange, handleCreateGoogleMeet, meetLink }) => (
   <main className="main-content">
     <h1>Dashboard</h1>
     <div className="dashboard-grid">
@@ -113,6 +144,28 @@ const MainContent = () => (
       <div className="dashboard-card">
         <h2>Team Performance</h2>
         <p>Performance metrics and charts</p>
+      </div>
+      <div className='dashboard-card'>
+        <h2>Create Google Meet</h2>
+        <button onClick={handleToggleForm}>Create Google Meet</button>
+        {showForm && (
+          <div>
+            <input
+              type="datetime-local"
+              value={dateTime}
+              onChange={handleDateTimeChange}
+            />
+            <button onClick={handleCreateGoogleMeet}>Generate Meet Link</button>
+          </div>
+        )}
+        {meetLink && (
+          <p>
+            Google Meet Link:{' '}
+            <a href={meetLink} target="_blank" rel="noopener noreferrer">
+              {meetLink}
+            </a>
+          </p>
+        )}
       </div>
     </div>
   </main>

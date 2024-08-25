@@ -9,6 +9,7 @@ import TechNewsSection from './components/TechNewsSection';
 import NewProject from './components/NewProject';
 import Auth from './components/Auth';
 import Dashboard from './components/Dashboard';
+import Footer from './components/Footer';
 
 const CLIENT_ID = '1072192242833-p04mfhg029gk0earersup565qoi3344q.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyCTAxL0HW8o_PAmP2RTdjWIl6obyuXWWlI';
@@ -95,6 +96,7 @@ function App() {
           } />
           <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/" />} />
         </Routes>
+        {/* <Footer /> */}
       </div>
     </Router>
   );
