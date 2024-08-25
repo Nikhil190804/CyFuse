@@ -1,13 +1,9 @@
-
-// src/components/Auth.jsx
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
 
 const Auth = ({ isSignUp, onSuccess }) => {
-  const [name, setName] = useState("");
+  const [name, setName] = useState(""); // Added for sign-up
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
   const handleAuth = async () => {
     try {
@@ -22,8 +18,9 @@ const Auth = ({ isSignUp, onSuccess }) => {
       const data = await response.json();
 
       if (response.ok) {
-        alert(isSignUp ? "User Registered Successfully!" : "Logged in Successfully!");
-        navigate('/dashboard');
+        alert(isSignUp ? "User Registered Successfully!" : "Logged in Successfully!"
+        );
+        onSuccess();
       } else {
         throw new Error(data.message || "Something went wrong");
       }
@@ -66,8 +63,6 @@ const Auth = ({ isSignUp, onSuccess }) => {
     </div>
   );
 };
-
-
 
 const styles = {
   page: {
